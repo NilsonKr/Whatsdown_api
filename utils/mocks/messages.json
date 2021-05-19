@@ -1,0 +1,32 @@
+[
+	{
+		"chat": "d2dd4874-a032-4ef5-a571-042931808399",
+		"user": "cf76e4e1-7bfb-4409-bb8e-151e8d8306db",
+		"message": "Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.",
+		"date": "9/23/2020"
+	},
+	{
+		"chat": "ae0c0af0-ea54-4112-8e16-ab7c613f7b80",
+		"user": "c935639b-77c4-4ce2-9718-b7de15e46344",
+		"message": "Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
+		"date": "7/13/2020"
+	},
+	{
+		"chat": "34099122-2c64-4cd7-8828-20b59ebd6e93",
+		"user": "e1c1943b-e85d-45d2-b5e4-3d6d8c0aef64",
+		"message": "In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.",
+		"date": "10/15/2020"
+	},
+	{
+		"chat": "673dc4fc-7e96-4165-a0ae-2c445c80f945",
+		"user": "8a0db906-9bd0-47b9-96a5-471975d1221b",
+		"message": "In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.",
+		"date": "10/31/2020"
+	},
+	{
+		"chat": "fac2beb5-f02f-4247-a065-608a3cae3ff5",
+		"user": "0a01fb70-ec41-4dfe-b43b-2baa41985429",
+		"message": "Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.",
+		"date": "8/30/2020"
+	}
+]
