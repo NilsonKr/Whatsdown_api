@@ -1,8 +1,11 @@
+const config = require('./config/index');
 const express = require('express');
 const app = express();
 
-const config = require('./config/index');
+const connectDb = require('./db');
 const routes = require('./network/routes');
+
+connectDb(config.db_uri);
 //Parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
