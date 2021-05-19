@@ -1,16 +1,25 @@
 const mocks = require('../../utils/mocks/messages.json');
+const Model = require('./model');
 
-function getAll() {
-	return Promise.resolve(mocks);
+function getAll(filter) {
+	return new Promise((resolve, reject) => {
+		Model.find(filter)
+			.populate('user')
+			.exec((err, res) => {
+				if (err) {
+					reject(err);
+				}
+
+				resolve(res);
+			});
+	});
 }
 
-function get(idFilter) {
-	const filtered = mocks.filter(message => message.user === idFilter);
-
-	return Promise.resolve(filtered);
+function getOne(idFilter) {
+	return Model.find(idFilter);
 }
 
 module.exports = {
 	getAll,
-	get,
+	getOne,
 };

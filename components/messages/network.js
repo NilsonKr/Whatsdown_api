@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
 	try {
-		const data = await controller.getList();
+		const data = await controller.getList(req.query.chat);
 
 		res.status(200).send({
 			data: data,
@@ -16,9 +16,9 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:msgId', async (req, res, next) => {
 	try {
-		const data = await controller.getFilter(req.params.id);
+		const data = await controller.getOne(req.params.msgId);
 
 		res.status(200).send({
 			data: data,

@@ -1,18 +1,31 @@
 const store = require('./store');
 
-async function getList() {
+async function getList(chat) {
+	let filter = {};
+
+	if (chat) {
+		filter.chat = chat;
+	}
+
+	console.log(filter);
+
 	return new Promise((resolve, reject) => {
 		store
-			.getAll()
+			.getAll(filter)
 			.then(data => resolve(data))
 			.catch(err => reject(err));
 	});
 }
 
-async function getFilter(idfilter) {
+async function getOne(msgFilter) {
+	let filter = {};
+	if (msgFilter) {
+		filter._id = msgFilter;
+	}
+
 	return new Promise((resolve, reject) => {
 		store
-			.get(idfilter)
+			.getOne(filter)
 			.then(data => resolve(data))
 			.catch(err => reject(err));
 	});
@@ -20,5 +33,5 @@ async function getFilter(idfilter) {
 
 module.exports = {
 	getList,
-	getFilter,
+	getOne,
 };
