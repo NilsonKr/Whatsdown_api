@@ -11,4 +11,7 @@ function connect(server) {
 	});
 }
 
-module.exports = connect;
+module.exports = {
+	socket,
+	connect,
+};

@@ -1,3 +1,4 @@
+const { socket } = require('../../sockets');
 const store = require('./store');
 
 function getList(chat) {
@@ -44,7 +45,10 @@ function createOne(chat, user, msg) {
 	return new Promise((resolve, reject) => {
 		store
 			.create(newMsg)
-			.then(data => resolve(data))
+			.then(data => {
+				socket.io.emit('message', data);
+				resolve(data);
+			})
 			.catch(err => reject(err));
 	});
 }

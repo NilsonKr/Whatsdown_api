@@ -1,5 +1,5 @@
 const config = require('./config/index');
-const connectSocket = require('./sockets');
+const { connect: connectSocket } = require('./sockets');
 const connectDb = require('./db');
 
 const express = require('express');
