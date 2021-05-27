@@ -30,7 +30,7 @@ function getOne(msgFilter) {
 	});
 }
 
-function createOne(chat, user, msg) {
+async function createOne(chat, user, msg) {
 	if (!chat || !user || !msg) {
 		throw new Error('Missing Data!');
 	}
@@ -42,15 +42,16 @@ function createOne(chat, user, msg) {
 		date: new Date(),
 	};
 
-	return new Promise((resolve, reject) => {
-		store
-			.create(newMsg)
-			.then(data => {
-				socket.io.emit('message', data);
-				resolve(data);
-			})
-			.catch(err => reject(err));
-	});
+	try {
+		const result = await store.create(newMsg);
+		const messageRetrieved = await store.getOne(result._id);
+
+		socket.io.emit('message', messageRetrieved);
+
+		return messageRetrieved;
+	} catch (error) {
+		throw new Error('Missing Data!');
+	}
 }
 
 function removeOne(id) {
