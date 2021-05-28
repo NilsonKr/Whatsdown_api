@@ -1,8 +1,35 @@
 const store = require('./store');
 const msgStore = require('./../messages/store');
+const { ObjectId } = require('mongodb');
 
-function getChats() {
-	return store.getAll();
+async function getChats(query) {
+	let filter = {};
+	if (query.user) {
+		//Filter chats of certain user
+		filter.users = { $in: [ObjectId(query.user)] };
+	}
+
+	//Return chats with their messages
+	try {
+		const result = await store.getAll(filter);
+
+		const completeChats = await Promise.all(
+			result.map(async item => {
+				const messages = await msgStore.getAll({ chat: item._id });
+
+				const wholeChat = JSON.parse(JSON.stringify(item));
+				wholeChat.messages = [...messages];
+
+				return wholeChat;
+			})
+		);
+
+		return completeChats;
+	} catch (error) {
+		console.error(error);
+	}
+
+	return;
 }
 
 async function getOneChat(chatId) {

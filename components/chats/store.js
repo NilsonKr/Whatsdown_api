@@ -1,14 +1,13 @@
 const Model = require('./model');
 
-function getAll() {
+function getAll(query) {
 	return new Promise((resolve, reject) => {
-		Model.find()
+		Model.find(query)
 			.populate('users')
 			.exec((err, res) => {
 				if (err) {
 					reject(err);
 				}
-
 				resolve(res);
 			});
 	});

@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
 	try {
-		const result = await controller.getChats();
+		const result = await controller.getChats(req.query);
 
 		res.status(200).send({
 			data: result,
