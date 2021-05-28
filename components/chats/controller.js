@@ -1,11 +1,25 @@
 const store = require('./store');
+const msgStore = require('./../messages/store');
 
 function getChats() {
 	return store.getAll();
 }
 
-function getOneChat(chatId) {
-	return store.getOne(chatId);
+async function getOneChat(chatId) {
+	try {
+		const result = await store.getOne(chatId);
+		const messages = await msgStore.getAll({ chat: chatId });
+
+		//Create a new chat with their messages
+		const completeChat = JSON.parse(JSON.stringify(result));
+		completeChat.messages = [...messages];
+
+		return completeChat;
+	} catch (error) {
+		console.error(error);
+	}
+
+	// return store.getOne(chatId);
 }
 
 function createChat(users) {

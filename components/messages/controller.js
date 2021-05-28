@@ -43,6 +43,7 @@ async function createOne(chat, user, msg) {
 	};
 
 	try {
+		//Save new message and then fetch to get it populated
 		const result = await store.create(newMsg);
 		const messageRetrieved = await store.getOne(result._id);
 
