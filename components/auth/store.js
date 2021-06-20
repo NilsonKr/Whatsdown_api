@@ -1,11 +1,11 @@
 const Model = require('./model');
 
-function getAll() {
-	return Model.find();
+function getAll(filter) {
+	return Model.find(filter);
 }
 
 function getOne(id) {
-	return Model.findOne({ _id: id });
+	return Model.findOne(id);
 }
 
 function create(user) {

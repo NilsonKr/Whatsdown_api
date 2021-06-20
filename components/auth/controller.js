@@ -1,11 +1,11 @@
 const store = require('./store');
 
-function getUsers() {
-	return store.getAll();
+function getUsers(filter) {
+	return store.getAll(filter);
 }
 
 function getOne(id) {
-	return store.getOne(id);
+	return store.getOne({ _id: id });
 }
 
 function createUser(user) {

@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const config = require('../config/index');
 
 const connectDb = require('../db');
-const { createUser } = require('../components/users/controller');
+const { createUser } = require('../components/auth/controller');
 
 connectDb(config.db_uri);
 
