@@ -8,13 +8,17 @@ function getOne(id) {
 	return store.getOne(id);
 }
 
-function createUser(name) {
-	if (!name) {
-		return new Error('User Name Required!');
+function createUser(user) {
+	const { name, email, password } = user;
+
+	if (!name || !email || !password) {
+		throw new Error('User Data Incomplete!');
 	}
 
 	const newUser = {
-		name: name,
+		name,
+		email,
+		password,
 	};
 
 	return store.create(newUser);
@@ -22,7 +26,7 @@ function createUser(name) {
 
 function updateUser(id, newData) {
 	if (!newData) {
-		return new Error('Update Data Required!');
+		throw new Error('Update Data Required!');
 	}
 
 	return store.update({ _id: id }, newData);

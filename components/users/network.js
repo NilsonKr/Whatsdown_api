@@ -31,7 +31,7 @@ router.get('/:userId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 	try {
-		const result = await controller.createUser(req.body.name);
+		const result = await controller.createUser(req.body);
 
 		res.status(201).send({
 			data: result,

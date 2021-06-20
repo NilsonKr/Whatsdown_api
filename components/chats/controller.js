@@ -17,6 +17,7 @@ async function getChats(query) {
 			result.map(async item => {
 				const messages = await msgStore.getAll({ chat: item._id });
 
+				//Add Messages
 				const wholeChat = JSON.parse(JSON.stringify(item));
 				wholeChat.messages = [...messages];
 
