@@ -20,6 +20,8 @@ passport.use(
 				return done(boom.unauthorized(), false);
 			}
 
+			delete user.password;
+
 			done(false, user);
 		} catch (error) {
 			return done(error, false);
