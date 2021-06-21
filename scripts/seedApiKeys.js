@@ -29,7 +29,6 @@ const apiKeys = [
 			'auth:signup',
 			'user:get',
 			'user:update',
-			'user:create',
 			'user:delete',
 			'message:get',
 			'message:create',

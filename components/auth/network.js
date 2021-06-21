@@ -1,6 +1,7 @@
 const passport = require('passport');
 const express = require('express');
 const controller = require('./controller');
+const validateScopes = require('../../utils/auth/handleScopes');
 
 //JWT Strategy
 require('../../utils/auth/jwtStrategy');
@@ -10,6 +11,7 @@ const router = express.Router();
 router.get(
 	'/:userId',
 	passport.authenticate('jwt', { session: false }),
+	validateScopes(['user:get']),
 	async (req, res, next) => {
 		const { userId } = req.params;
 
@@ -30,34 +32,44 @@ router.get(
 	}
 );
 
-router.put('/:userId', async (req, res, next) => {
-	const { userId } = req.params;
+router.put(
+	'/:userId',
+	passport.authenticate('jwt', { session: false }),
+	validateScopes(['user:update']),
+	async (req, res, next) => {
+		const { userId } = req.params;
 
-	try {
-		const result = await controller.updateUser(userId, req.body);
+		try {
+			const result = await controller.updateUser(userId, req.body);
 
-		res.status(201).send({
-			data: result,
-			message: 'User Updated',
-		});
-	} catch (error) {
-		next(error);
+			res.status(201).send({
+				data: result,
+				message: 'User Updated',
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
-});
+);
 
-router.delete('/:userId', async (req, res, next) => {
-	const { userId } = req.params;
+router.delete(
+	'/:userId',
+	passport.authenticate('jwt', { session: false }),
+	validateScopes(['user:delete']),
+	async (req, res, next) => {
+		const { userId } = req.params;
 
-	try {
-		const result = await controller.deleteUser(userId);
+		try {
+			const result = await controller.deleteUser(userId);
 
-		res.status(200).send({
-			data: result,
-			message: 'User Removed',
-		});
-	} catch (error) {
-		next(error);
+			res.status(200).send({
+				data: result,
+				message: 'User Removed',
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
-});
+);
 
 module.exports = router;
