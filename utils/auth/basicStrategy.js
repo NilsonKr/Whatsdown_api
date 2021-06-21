@@ -20,9 +20,11 @@ passport.use(
 				return done(boom.unauthorized(), false);
 			}
 
-			delete user.password;
+			//Parse mongoose Document
+			const newUser = user.toObject();
+			delete newUser.password;
 
-			done(false, user);
+			done(false, newUser);
 		} catch (error) {
 			return done(error, false);
 		}

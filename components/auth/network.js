@@ -1,20 +1,34 @@
+const passport = require('passport');
 const express = require('express');
 const controller = require('./controller');
 
+//JWT Strategy
+require('../../utils/auth/jwtStrategy');
+
 const router = express.Router();
 
-router.get('/:userId', async (req, res, next) => {
-	try {
-		const result = await controller.getOne(req.params.userId);
+router.get(
+	'/:userId',
+	passport.authenticate('jwt', { session: false }),
+	async (req, res, next) => {
+		const { userId } = req.params;
 
-		res.status(200).send({
-			data: result,
-			message: 'User retrieved',
-		});
-	} catch (error) {
-		next(error);
+		try {
+			const [result] = await controller.getUsers({ _id: userId });
+
+			//Parse mongoose Document
+			const response = result.toObject();
+			delete response.password;
+
+			res.status(200).send({
+				data: response,
+				message: 'User retrieved',
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
-});
+);
 
 router.put('/:userId', async (req, res, next) => {
 	const { userId } = req.params;
