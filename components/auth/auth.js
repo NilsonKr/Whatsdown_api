@@ -61,4 +61,17 @@ router.post('/sign-in', (req, res, next) => {
 	})(req, res, next);
 });
 
+router.post('/sign-up', async (req, res, next) => {
+	try {
+		const newUser = await controller.createUser(req.body.user);
+
+		res.status(201).json({
+			data: newUser._id,
+			message: 'User Created!',
+		});
+	} catch (error) {
+		next(error);
+	}
+});
+
 module.exports = router;
