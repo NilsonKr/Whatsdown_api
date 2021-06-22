@@ -15,7 +15,7 @@ function create(user) {
 }
 
 function update(filter, update) {
-	return Model.findOneAndUpdate(filter, update);
+	return Model.findOneAndUpdate(filter, update, { new: true });
 }
 
 function remove(id) {

@@ -37,7 +37,7 @@ router.post('/sign-in', (req, res, next) => {
 				}
 
 				//Build Jwt
-				const { _id: id, name, email } = user;
+				const { _id: id, name, email, description, status } = user;
 
 				const payload = {
 					sub: id,
@@ -52,7 +52,7 @@ router.post('/sign-in', (req, res, next) => {
 
 				res.status(200).json({
 					token: JWToken,
-					user: { id, name, email },
+					user: { id, name, email, description, status },
 				});
 			} catch (error) {
 				next(error);

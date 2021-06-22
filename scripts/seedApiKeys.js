@@ -16,6 +16,7 @@ const apiKeys = [
 			'auth:login',
 			'auth:signup',
 			'user:get',
+			'user:update',
 			'message:get',
 			'message:create',
 			'chat:get',

@@ -14,20 +14,24 @@ const users = [
 		name: 'Nilson',
 		email: 'nilson@undefined.com',
 		password: config.privatePassword,
+		// description: 'Fullstack Developer At Seoul :3',
+		// status: '🦄',
 	},
 	{
 		name: 'mina',
 		email: 'mina@undefined.com',
 		password: config.privatePassword,
+		// status: '🐧',
+		// description: 'Singer and dancer from Twice ',
 	},
 ];
 
 async function newUser(user) {
-	const { name, email, password } = user;
+	const { password } = user;
 	try {
 		const cryptPassword = await bcryptjs.hash(password, 10);
 
-		const data = await createUser({ name, email, password: cryptPassword });
+		const data = await createUser({ ...user, password: cryptPassword });
 
 		debug(chalk.greenBright(`User ${data._id} has been created`));
 	} catch (error) {
