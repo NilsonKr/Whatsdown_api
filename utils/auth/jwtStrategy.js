@@ -23,7 +23,7 @@ passport.use(
 				const newUser = userExists.toObject();
 				delete newUser.password;
 
-				return done(false, { ...newUser, scopes: payload.scopes });
+				return done(false, { ...newUser, scopes: payload.scopes, token: payload.token });
 			} catch (error) {
 				return done(error, false);
 			}

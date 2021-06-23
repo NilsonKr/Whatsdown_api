@@ -12,6 +12,9 @@ const router = express.Router();
 //Basic Strategy
 require('../../utils/auth/basicStrategy');
 
+//JWT Strategy
+require('../../utils/auth/jwtStrategy');
+
 router.post('/sign-in', (req, res, next) => {
 	const { apiToken } = req.body;
 
@@ -30,20 +33,14 @@ router.post('/sign-in', (req, res, next) => {
 					return next(error);
 				}
 
-				const apiKey = await apiKeysModel.findOne({ token: apiToken });
-
-				if (!apiKey) {
-					return next(boom.unauthorized());
-				}
-
-				//Build Jwt
+				//Build Jwt for authorization and return user info
 				const { _id: id, name, email, description, status } = user;
 
 				const payload = {
 					sub: id,
 					name,
 					email,
-					scopes: apiKey.scopes,
+					token: apiToken,
 				};
 
 				const JWToken = jwt.sign(payload, config.jwtSecret, {
@@ -73,5 +70,43 @@ router.post('/sign-up', async (req, res, next) => {
 		next(error);
 	}
 });
+
+router.post(
+	'/authorizate',
+	passport.authenticate('jwt', { session: false }),
+	async (req, res, next) => {
+		if (!req.user) {
+			return next(boom.unauthorized());
+		}
+
+		const { token, name, email, _id: id } = req.user;
+
+		//Built JWT With authorized scopes
+		try {
+			const apiKey = await apiKeysModel.findOne({ token });
+
+			if (!apiKey) {
+				return next(boom.unauthorized());
+			}
+
+			const payload = {
+				sub: id,
+				name,
+				email,
+				scopes: apiKey.scopes,
+			};
+
+			const JWTtoken = jwt.sign(payload, config.jwtSecret, {
+				expiresIn: '1h',
+			});
+
+			res.status(200).json({
+				token: JWTtoken,
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+);
 
 module.exports = router;
