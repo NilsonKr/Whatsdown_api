@@ -1,4 +1,5 @@
 const store = require('./store');
+const bcrypt = require('bcryptjs');
 
 function getUsers(filter) {
 	return store.getAll(filter);
@@ -8,17 +9,19 @@ function getOne(id) {
 	return store.getOne({ _id: id });
 }
 
-function createUser(user) {
+async function createUser(user) {
 	const { name, email, password } = user;
 
 	if (!name || !email || !password) {
 		throw new Error('User Data Incomplete!');
 	}
 
+	const hashedPassword = await bcrypt.hash(password, 10);
+
 	const newUser = {
 		name,
 		email,
-		password,
+		password: hashedPassword,
 	};
 
 	return store.create(newUser);
