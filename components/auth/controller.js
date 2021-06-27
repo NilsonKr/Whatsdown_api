@@ -9,6 +9,22 @@ function getOne(id) {
 	return store.getOne({ _id: id });
 }
 
+async function getOrCreate({ name, email, password }) {
+	if (!name || !email || !password) {
+		throw new Error('User Data Incomplete!');
+	}
+
+	const hashedPassword = await bcrypt.hash(password, 10);
+
+	const newUser = {
+		name,
+		email,
+		password: hashedPassword,
+	};
+
+	return store.getOrCreate(newUser);
+}
+
 async function createUser(user) {
 	const { name, email, password } = user;
 
@@ -45,4 +61,5 @@ module.exports = {
 	createUser,
 	updateUser,
 	deleteUser,
+	getOrCreate,
 };

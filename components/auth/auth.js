@@ -44,7 +44,7 @@ router.post('/sign-in', (req, res, next) => {
 				};
 
 				const JWToken = jwt.sign(payload, config.jwtSecret, {
-					expiresIn: '1h',
+					expiresIn: '4m',
 				});
 
 				res.status(200).json({
@@ -75,6 +75,8 @@ router.post(
 	'/authorizate',
 	passport.authenticate('jwt', { session: false }),
 	async (req, res, next) => {
+		const { remember } = req.query;
+
 		if (!req.user) {
 			return next(boom.unauthorized());
 		}
@@ -96,8 +98,10 @@ router.post(
 				scopes: apiKey.scopes,
 			};
 
+			const time = remember === 'true' ? '30d' : '4h';
+
 			const JWTtoken = jwt.sign(payload, config.jwtSecret, {
-				expiresIn: '1h',
+				expiresIn: time,
 			});
 
 			res.status(200).json({
@@ -108,5 +112,44 @@ router.post(
 		}
 	}
 );
+
+router.post('/signprovider', async (req, res, next) => {
+	const { apiToken, user } = req.body;
+
+	if (!apiToken) {
+		return next(boom.unauthorized());
+	}
+
+	try {
+		const result = await controller.getOrCreate(user);
+		//Parse Moongoose Object
+		const newUser = result.toObject();
+		delete newUser.password;
+
+		//Signing JWT
+		const payload = {
+			sub: newUser._id,
+			name: newUser.name,
+			email: newUser.email,
+			token: apiToken,
+		};
+
+		const jwtToken = jwt.sign(payload, config.jwtSecret, {
+			expiresIn: '4m',
+		});
+
+		console.log('Good');
+
+		res.status(200).json({
+			data: {
+				token: jwtToken,
+				user: newUser,
+			},
+			message: 'Login Succesfull!',
+		});
+	} catch (error) {
+		next(error);
+	}
+});
 
 module.exports = router;

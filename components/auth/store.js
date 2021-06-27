@@ -8,6 +8,18 @@ function getOne(id) {
 	return Model.findOne(id);
 }
 
+async function getOrCreate(user) {
+	const exists = await Model.findOne({ email: user.email });
+
+	if (!exists) {
+		const newUser = new Model(user);
+
+		return newUser.save();
+	}
+
+	return exists;
+}
+
 function create(user) {
 	const newUser = new Model(user);
 
@@ -27,4 +39,5 @@ module.exports = {
 	create,
 	update,
 	remove,
+	getOrCreate,
 };
