@@ -138,8 +138,6 @@ router.post('/signprovider', async (req, res, next) => {
 			expiresIn: '4m',
 		});
 
-		console.log('Good');
-
 		res.status(200).json({
 			data: {
 				token: jwtToken,

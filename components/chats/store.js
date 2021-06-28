@@ -1,9 +1,13 @@
 const Model = require('./model');
 
+// function getAll(query) {
+// 	return Model.find(query);
+// }
+
 function getAll(query) {
 	return new Promise((resolve, reject) => {
 		Model.find(query)
-			.populate('users')
+			.populate('users.user')
 			.exec((err, res) => {
 				if (err) {
 					reject(err);
@@ -16,7 +20,7 @@ function getAll(query) {
 function getOne(id) {
 	return new Promise((resolve, reject) => {
 		Model.findById(id)
-			.populate('users')
+			.populate('users.user')
 			.exec((err, res) => {
 				if (err) {
 					reject(err);

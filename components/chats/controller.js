@@ -6,10 +6,11 @@ async function getChats(query) {
 	let filter = {};
 	if (query.user) {
 		//Filter chats of certain user
-		filter.users = { $in: [ObjectId(query.user)] };
+		filter.users = { $elemMatch: { user: ObjectId(query.user) } };
 	}
 
 	//Return chats with their messages
+
 	try {
 		const result = await store.getAll(filter);
 
