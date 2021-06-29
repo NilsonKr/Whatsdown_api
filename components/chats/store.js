@@ -7,7 +7,7 @@ const Model = require('./model');
 function getAll(query) {
 	return new Promise((resolve, reject) => {
 		Model.find(query)
-			.populate('users.user')
+			.populate('users.user', ['name', 'email', 'status', 'description'])
 			.exec((err, res) => {
 				if (err) {
 					reject(err);
@@ -20,7 +20,7 @@ function getAll(query) {
 function getOne(id) {
 	return new Promise((resolve, reject) => {
 		Model.findById(id)
-			.populate('users.user')
+			.populate('users.user', ['name', 'email', 'status', 'description'])
 			.exec((err, res) => {
 				if (err) {
 					reject(err);
