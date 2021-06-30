@@ -5,6 +5,10 @@ function getUsers(filter) {
 	return store.getAll(filter);
 }
 
+function authUser(filter) {
+	return store.getAll(filter, true);
+}
+
 function getOne(id) {
 	return store.getOne({ _id: id });
 }
@@ -57,6 +61,7 @@ function deleteUser(id) {
 
 module.exports = {
 	getUsers,
+	authUser,
 	getOne,
 	createUser,
 	updateUser,

@@ -1,7 +1,11 @@
 const Model = require('./model');
 
-function getAll(filter) {
-	return Model.find(filter).limit(10);
+function getAll(filter, isAuth) {
+	if (isAuth) {
+		return Model.find(filter);
+	}
+
+	return Model.find(filter, ['name', 'email', 'description', 'status']).limit(10);
 }
 
 function getOne(id) {
