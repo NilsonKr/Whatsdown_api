@@ -1,7 +1,7 @@
 const Model = require('./model');
 
 function getAll(filter) {
-	return Model.find(filter);
+	return Model.find(filter).limit(10);
 }
 
 function getOne(id) {

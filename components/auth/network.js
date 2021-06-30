@@ -9,6 +9,24 @@ require('../../utils/auth/jwtStrategy');
 const router = express.Router();
 
 router.get(
+	'/',
+	passport.authenticate('jwt', { session: false }),
+	validateScopes(['user:get']),
+	async (req, res, next) => {
+		try {
+			const result = await controller.getUsers();
+
+			res.status(200).json({
+				data: result,
+				message: 'Users Retrieved',
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+);
+
+router.get(
 	'/:userId',
 	passport.authenticate('jwt', { session: false }),
 	validateScopes(['user:get']),

@@ -1,9 +1,5 @@
 const Model = require('./model');
 
-// function getAll(query) {
-// 	return Model.find(query);
-// }
-
 function getAll(query) {
 	return new Promise((resolve, reject) => {
 		Model.find(query)
