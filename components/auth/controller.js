@@ -1,7 +1,13 @@
 const store = require('./store');
 const bcrypt = require('bcryptjs');
 
-function getUsers(filter) {
+function getUsers(query) {
+	let filter = {};
+
+	if (query.username) {
+		filter = { name: { $regex: query.username, $options: 'i' } };
+	}
+
 	return store.getAll(filter);
 }
 

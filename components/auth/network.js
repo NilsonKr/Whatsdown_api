@@ -13,8 +13,10 @@ router.get(
 	passport.authenticate('jwt', { session: false }),
 	validateScopes(['user:get']),
 	async (req, res, next) => {
+		const { username } = req.query;
+
 		try {
-			const result = await controller.getUsers();
+			const result = await controller.getUsers({ username });
 
 			res.status(200).json({
 				data: result,
