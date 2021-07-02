@@ -36,7 +36,7 @@ router.get(
 		const { userId } = req.params;
 
 		try {
-			const [result] = await controller.getUsers({ _id: userId });
+			const [result] = await controller.getUsers({ id: userId });
 
 			//Parse mongoose Document
 			const response = result.toObject();

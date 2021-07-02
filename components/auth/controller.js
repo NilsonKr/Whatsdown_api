@@ -4,8 +4,12 @@ const bcrypt = require('bcryptjs');
 function getUsers(query) {
 	let filter = {};
 
+	if (query.id) {
+		filter._id = query.id;
+	}
+
 	if (query.username) {
-		filter = { name: { $regex: query.username, $options: 'i' } };
+		filter.name = { $regex: query.username, $options: 'i' };
 	}
 
 	return store.getAll(filter);
