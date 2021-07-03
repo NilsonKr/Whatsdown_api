@@ -1,30 +1,13 @@
-const mocks = require('../../utils/mocks/messages.json');
 const Model = require('./model');
 
 function getAll(filter) {
 	//Retrieve Data From the users in the messages listed
-	return new Promise((resolve, reject) => {
-		Model.find(filter)
-			.populate('user')
-			.exec((err, res) => {
-				if (err) reject(err);
-
-				resolve(res);
-			});
-	});
+	return Model.find(filter);
 }
 
 function getOne(idFilter) {
 	//Retrieve Data From the user
-	return new Promise((resolve, reject) => {
-		Model.findOne(idFilter)
-			.populate('user')
-			.exec((err, res) => {
-				if (err) reject(err);
-
-				resolve(res);
-			});
-	});
+	return Model.findOne(idFilter);
 }
 
 function create(newMsg) {

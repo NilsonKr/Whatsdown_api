@@ -3,10 +3,7 @@ const Schema = moongose.Schema;
 
 const msgSchema = new Schema({
 	chat: String,
-	user: {
-		type: Schema.ObjectId,
-		ref: 'users',
-	},
+	user: String,
 	message: String,
 	date: Date,
 });

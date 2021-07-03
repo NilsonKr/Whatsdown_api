@@ -51,7 +51,7 @@ async function createOne(chat, user, msg) {
 
 		return messageRetrieved;
 	} catch (error) {
-		throw new Error('Missing Data!');
+		throw new Error(error.message);
 	}
 }
 
