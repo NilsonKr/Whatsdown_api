@@ -3,11 +3,16 @@ const SocketIO = require('socket.io');
 const socket = {};
 
 function connect(server) {
-	socket.io = SocketIO(server);
+	socket.io = SocketIO(server, {
+		cors: {
+			origin: 'http://localhost:8000',
+			methods: ['GET', 'POST'],
+		},
+	});
 
-	socket.io.on('connection', socketOpen => {
+	socket.io.on('connection', socket => {
 		console.log('[SOCKET] New Connection!');
-		socket.io.emit('message', 'Welcome!');
+		socket.emit('message', 'Welcome!');
 	});
 }
 
