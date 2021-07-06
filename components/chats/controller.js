@@ -53,7 +53,7 @@ async function getOneChat(chatId) {
 
 function createChat(users) {
 	if (!users || !users.length) {
-		return new Error('Users Required!');
+		return new Error('Bad Chat Implementation!');
 	}
 
 	const newChat = {
