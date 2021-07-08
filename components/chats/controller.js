@@ -51,16 +51,22 @@ async function getOneChat(chatId) {
 	// return store.getOne(chatId);
 }
 
-function createChat(users) {
+async function createChat(users) {
 	if (!users || !users.length) {
-		return new Error('Bad Chat Implementation!');
+		throw Error('Bad Chat Implementation!');
 	}
 
 	const newChat = {
 		users: [...users],
 	};
 
-	return store.create(newChat);
+	try {
+		const chatCreated = await store.create(newChat);
+
+		return store.getOne(chatCreated._id);
+	} catch (error) {
+		throw new Error(error);
+	}
 }
 
 function removeChat(id) {
