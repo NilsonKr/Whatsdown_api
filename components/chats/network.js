@@ -65,6 +65,26 @@ router.post(
 	}
 );
 
+router.put(
+	'/:chatId',
+	passport.authenticate('jwt', { session: false }),
+	validateScopes(['chat:create']),
+	async (req, res, next) => {
+		const { chatId } = req.params;
+
+		try {
+			const result = await controller.updateChat(chatId, req.body);
+
+			res.status(201).send({
+				data: result,
+				message: 'Chat Created',
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+);
+
 router.delete(
 	'/:chatId',
 	passport.authenticate('jwt', { session: false }),

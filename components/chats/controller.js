@@ -69,6 +69,14 @@ async function createChat(users) {
 	}
 }
 
+function updateChat(chatId, payload) {
+	if (!chatId || !payload) {
+		throw new Error('Missing Params');
+	}
+
+	return store.update(chatId, payload);
+}
+
 function removeChat(id) {
 	return store.remove(id);
 }
@@ -77,5 +85,6 @@ module.exports = {
 	getChats,
 	getOneChat,
 	createChat,
+	updateChat,
 	removeChat,
 };

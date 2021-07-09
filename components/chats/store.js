@@ -33,6 +33,10 @@ function create(chat) {
 	return newChat.save();
 }
 
+function update(id, payload) {
+	return Model.updateOne({ _id: id }, { $set: { users: payload } });
+}
+
 function remove(id) {
 	return Model.findOneAndDelete({ _id: id });
 }
@@ -41,5 +45,6 @@ module.exports = {
 	getAll,
 	getOne,
 	create,
+	update,
 	remove,
 };
