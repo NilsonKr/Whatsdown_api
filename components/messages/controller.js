@@ -1,4 +1,3 @@
-const { socket } = require('../../sockets');
 const store = require('./store');
 
 function getList(chat) {
@@ -30,7 +29,7 @@ function getOne(msgFilter) {
 	});
 }
 
-async function createOne(chat, user, msg) {
+function createOne(chat, user, msg) {
 	if (!chat || !user || !msg) {
 		throw new Error('Missing Data!');
 	}
@@ -42,17 +41,7 @@ async function createOne(chat, user, msg) {
 		date: new Date(),
 	};
 
-	try {
-		//Save new message and then fetch to get it populated
-		const result = await store.create(newMsg);
-		const messageRetrieved = await store.getOne(result._id);
-
-		socket.io.emit('message', messageRetrieved);
-
-		return messageRetrieved;
-	} catch (error) {
-		throw new Error(error.message);
-	}
+	return store.create(newMsg);
 }
 
 function removeOne(id) {
