@@ -29,5 +29,5 @@ module.exports = {
 			},
 		],
 	},
-	plugins: [new CleanWebpackPlugin(), new DotenvPlugin()],
+	plugins: [ new DotenvPlugin(), new CleanWebpackPlugin(),],
 };

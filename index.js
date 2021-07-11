@@ -5,6 +5,7 @@ const connectDb = require('./db');
 const express = require('express');
 const { wrapBoomError, handleError } = require('./utils/middlewares/handleError');
 
+console.log(config.dev)
 //Server
 const app = express();
 const server = require('http').Server(app);
