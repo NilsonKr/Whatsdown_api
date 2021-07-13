@@ -1,7 +1,19 @@
 body {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	color: whitesmoke;
 	background-color: #333;
+}
+
+p, a{
+	font-size: 1.3rem;
+}
+
+a {
+	font-weight: bold;
+	text-decoration: none;
+	color: rgb(255, 0, 255);
 }
